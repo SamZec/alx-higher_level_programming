@@ -3,8 +3,7 @@ from variable_load_5 import a
 
 
 def _var():
-    print("{}".format(a))
-
+    print("{:d}".format(a))
 
 
 if __name__ == "__main__":

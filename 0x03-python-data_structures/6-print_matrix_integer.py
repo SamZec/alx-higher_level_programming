@@ -2,7 +2,10 @@
 def print_matrix_integer(matrix=[[]]):
     if not matrix:
         pass
-    for i in matrix:
-        for j in i:
-            print("{:d}".format(j), end=' ')
-        print()
+    l = len(matrix)
+    for x in range(l):
+        for y in range(len(matrix[x])):
+            print('{:d}'.format(matrix[x][y]), end='')
+            if y is not (len(matrix[x]) - 1):
+                print(end=" ")
+        print("")

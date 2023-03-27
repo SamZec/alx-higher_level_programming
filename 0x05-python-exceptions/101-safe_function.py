@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-from sys import stderr
+import sys
 
 
 def safe_function(fct, *args):
@@ -7,7 +7,7 @@ def safe_function(fct, *args):
     try:
         result = fct(*args)
     except Exception as e:
-        print("Exeception: {}".format(e), file=stderr)
+        print("Exeception: {}".format(e), file=sys.stderr)
         return result
     else:
         return result

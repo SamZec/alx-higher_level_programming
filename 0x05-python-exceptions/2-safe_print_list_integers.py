@@ -10,5 +10,6 @@ try:
             count += 1
         print()
         return count
+
 except Exception as e:
     pass

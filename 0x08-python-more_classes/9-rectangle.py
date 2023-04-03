@@ -59,9 +59,7 @@ class Rectangle:
     @classmethod
     def square(cls, size=0):
         """Retrun rectangle instance with width == height == size"""
-        width = size
-        height = size
-        return cls(width, height)
+        return cls(size, size)
 
     def area(self):
         """Return the area"""

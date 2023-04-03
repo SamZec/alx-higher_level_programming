@@ -56,11 +56,6 @@ class Rectangle:
         if rect_1 < rect_2:
             return rect_2
 
-    @classmethod
-    def square(cls, size=0):
-        """Retrun rectangle instance with width == height == size"""
-        return (cls(size, size))
-
     def area(self):
         """Return the area"""
         return self.__height * self.__width
@@ -99,3 +94,8 @@ class Rectangle:
     def __lt__(self, other):
         """"returns True based on the area less-than"""
         return self.area() < other.area()
+
+    @classmethod
+    def square(cls, size=0):
+        """Retrun rectangle instance with width == height == size"""
+        return cls(size, size)

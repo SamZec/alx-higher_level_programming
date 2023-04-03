@@ -8,6 +8,12 @@ class Rectangle:
     number_of_instances = 0
     print_symbol = '#'
 
+    @classmethod
+    def square(cls, size=0):
+        """returns a new Rectangle instance with width == height == size"""
+        return cls(size, size)
+
+
     def __init__(self, width=0, height=0):
         """Initialize Rectangle instance.
 
@@ -94,8 +100,3 @@ class Rectangle:
     def __lt__(self, other):
         """"returns True based on the area less-than"""
         return self.area() < other.area()
-
-    @classmethod
-    def square(cls, size=0):
-        """returns a new Rectangle instance with width == height == size"""
-        return cls(size, size)

@@ -1,0 +1,37 @@
+3-say_my_name.txt
+Doctest file for 3-say_my_name.py containing 
+say_my_name(first_name, last_name="") function
+
+Usage:
+Import the module
+>>> say_my_name = __import__('3-say_my_name').say_my_name
+
+Call it with arguments
+>>> say_my_name("John", "Smith")
+My name is John Smith
+
+Arguments must be string or type error is raised
+>>> say_my_name(12, "Smith")
+Traceback (most recent call last):
+	raise TypeError('first_name must be a string')
+TypeError: first_name must be a string
+
+>>> say_my_name("John", 12)
+Traceback (most recent call last):
+	raise TypeError('last_name must be a string')
+TypeError: last_name must be a string
+
+Last name argument can be optional
+>>> say_my_name("John")
+My name is John
+
+First name can't be None or ''
+>>> say_my_name("")
+Traceback (most recent call last):
+	raise TypeError('first_name must be a string')
+TypeError: first_name must be a string
+
+>>> say_my_name(None)
+Traceback (most recent call last):
+	raise TypeError('first_name must be a string')
+TypeError: first_name must be a string

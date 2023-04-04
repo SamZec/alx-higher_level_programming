@@ -1,0 +1,52 @@
+#0-add_integer.txt
+Doctest for add_integer(a, b=98)
+
+To use import funtion like this and it will return the addition
+of it's two arguments
+>>> add_integer = __import__('0-add_integer').add_integer
+
+Works with positive integers
+>>> print(add_integer(1, 2))
+3
+
+Works with negative integers
+>>> print(add_integer(-3, -4))
+-7
+
+Works with float but casts to integer
+>>> print(add_integer(100.3, -2.0))
+98
+
+If one argument is given it sets to first argumnet, 
+second argument defaults to 98
+>>> print(add_integer(2))
+100
+
+When strings are passed in type error is raise for first argument
+>>> print(add_integer("come", "home"))
+Traceback (most recent call last):
+	raise TypeError('a must be an integer')
+TypeError: a must be an integer
+
+If None is passed as argument
+>>> print(add_integer(None))
+Traceback (most recent call last):
+	 raise TypeError('a must be an integer')
+TypeError: a must be an integer
+
+Catching exceptions for argument b
+>>> try:
+...     print(add_integer(4, "School"))
+... except Exception as e:
+...     print(e)
+...
+b must be an integer
+
+Catching exceptions for argument b
+>>> try:
+...     print(add_integer(None))
+... except Exception as e:
+...     print(e)
+...
+a must be an integer
+>>>

@@ -66,3 +66,9 @@ if no argument is passed
 >>> print(matrix_divided())
 Traceback (most recent call last):
 TypeError: matrix_divided() missing 2 required positional arguments: 'matrix' and 'div'
+
+Dividing by div set to string
+>>> print(matrix_divided(matrix, 'three'))
+Traceback (most recent call last):
+	raise TypeError('div must be a number')
+TypeError: div must be a number

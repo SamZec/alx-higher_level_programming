@@ -49,4 +49,15 @@ Catching exceptions for argument b
 ...     print(e)
 ...
 a must be an integer
->>>
+
+cannot convert float NaN to integer
+>>> print(add_integer(float('NaN')))
+Traceback (most recent call last):
+	return int(a) + int(b)
+ValueError: cannot convert float NaN to integer
+
+Float overflow
+>>> print(add_integer(float('INF')))
+Traceback (most recent call last):
+	 return int(a) + int(b)
+OverflowError: cannot convert float infinity to integer

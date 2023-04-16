@@ -2,7 +2,7 @@
 # rectangle.py
 """A module for Rectangle class that inherit from Base"""
 
-from base import Base
+from models.base import Base
 
 
 class Rectangle(Base):

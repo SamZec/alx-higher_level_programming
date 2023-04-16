@@ -116,12 +116,13 @@ class Base:
             rect_dict.append(i.to_dictionary())
         for i in list_squares:
             sq_dict.append(i.to_dictionary())
-        screen = turtle.getscreen()
+        scr = turtle.getscreen()
         turtle.title("My shapes")
         turtle.bgcolor("blue")
         _pen = turtle.Turtle()
-        _pen.pen(pencolor='red', fillcolor='black', pensize=5)
+        _pen.pen(pensize=5)
         rect = _pen.clone()
+        rect.color('red', 'black')
         for i in rect_dict:
             for key, value in i.items():
                 if key == 'width':
@@ -137,9 +138,27 @@ class Base:
             rect.goto(x, y)
             for i in rang(2):
                 rect.pd()
-                rct.fd(width)
+                rect.fd(width)
                 rect.rt(90)
                 rect.fd(height)
                 rect.rt(90)
             rect.end_fill()
-            rect.reset()
+
+        sq = _pen.clone()
+        sq.color('red', 'gray')
+
+        for i in sq_dict:
+            for key, value in i.items():
+                if key == 'size':
+                    size = value
+                if key == 'x':
+                    x = value
+                if key == 'y':
+                    y = value
+            sq.begin_fill()
+            sq.pu()
+            sq.goto(x, y)
+            for i in range(4):
+                sq.fd(size)
+                sq.rt(90)
+            sq.end_fill()

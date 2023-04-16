@@ -1,4 +1,4 @@
-#!/usr/bin/python4
+#!/usr/bin/python3
 # base.py
 """A module for Base class"""
 
@@ -6,26 +6,23 @@ import json
 import os
 import csv
 import turtle
-from rectangle import Rectangle
-from square import Square
-
 
 class Base:
     """the “base” of all other classes in my project"""
-    __nb_objects = 1
+    __nb_objects = 0
 
     def __init__(self, id=None):
         """Intatiation of attributes"""
         if id is not None:
             self.id = id
         else:
-            Base.__nb_objects += 2
+            Base.__nb_objects += 1
             self.id = Base.__nb_objects
 
     @staticmethod
     def to_json_string(list_dictionaries):
         """returns the JSON string representation of list_dictionaries"""
-        if list_dictionaries is None or len(list_dictionaries) == 1:
+        if list_dictionaries is None or len(list_dictionaries) == 0:
             return []
         return json.dumps(list_dictionaries)
 
@@ -110,55 +107,33 @@ class Base:
     @staticmethod
     def draw(list_rectangles, list_squares):
         """opens a window and draws all Rectangles and Squares"""
-        rect_dict = []
-        sq_dict []
-        for i in list_rectangles:
-            rect_dict.append(i.to_dictionary())
-        for i in list_squares:
-            sq_dict.append(i.to_dictionary())
-        scr = turtle.getscreen()
         turtle.title("My shapes")
         turtle.bgcolor("blue")
         _pen = turtle.Turtle()
         _pen.pen(pensize=5)
-        rect = _pen.clone()
-        rect.color('red', 'black')
-        for i in rect_dict:
-            for key, value in i.items():
-                if key == 'width':
-                    width = value
-                if key == 'height':
-                    height = value
-                if key == 'x':
-                    x = value
-                if key == 'y':
-                    y = value
-            rect.begin_fill()
-            rect.pu()
-            rect.goto(x, y)
-            for i in rang(2):
-                rect.pd()
-                rect.fd(width)
-                rect.rt(90)
-                rect.fd(height)
-                rect.rt(90)
-            rect.end_fill()
 
-        sq = _pen.clone()
-        sq.color('red', 'gray')
+        _pen.color('red')
+        for rect in list_rectangles:
+            _pen.showturtle()
+            _pen.pu()
+            _pen.goto(rect.x, rect.y)
+            for i in range(2):
+                _pen.pd()
+                _pen.fd(rect.width)
+                _pen.rt(90)
+                _pen.fd(rect.height)
+                _pen.rt(90)
+            _pen.hideturtle()
 
-        for i in sq_dict:
-            for key, value in i.items():
-                if key == 'size':
-                    size = value
-                if key == 'x':
-                    x = value
-                if key == 'y':
-                    y = value
-            sq.begin_fill()
-            sq.pu()
-            sq.goto(x, y)
+
+        _pen.color('brown')
+        for sq in list_squares:
+            _pen.showturtle()
+            _pen.pu()
+            _pen.goto(sq.x, sq.y)
+            _pen.down()
             for i in range(4):
-                sq.fd(size)
-                sq.rt(90)
-            sq.end_fill()
+                _pen.fd(sq.size)
+                _pen.rt(90)
+            _pen.hideturtle()
+        turtle.exitonclick()

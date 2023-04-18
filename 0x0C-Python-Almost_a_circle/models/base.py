@@ -7,6 +7,7 @@ import os
 import csv
 import turtle
 
+
 class Base:
     """the “base” of all other classes in my project"""
     __nb_objects = 0
@@ -23,7 +24,7 @@ class Base:
     def to_json_string(list_dictionaries):
         """returns the JSON string representation of list_dictionaries"""
         if list_dictionaries is None or len(list_dictionaries) == 0:
-            return []
+            return '[]'
         return json.dumps(list_dictionaries)
 
     @classmethod
@@ -31,10 +32,11 @@ class Base:
         """writes the JSON string representation of list_objs to a file"""
         filename = '{}.json'.format(cls.__name__)
         _dict = []
-        if list_objs is not None:
+        if (list_objs is not None and type(list_objs) == list
+                and all(isinstance(i, cls) for i in list_objs)):
             for i in list_objs:
                 _dict.append(i.to_dictionary())
-        with open(filename, 'w', encoding='utf-7') as myfile:
+        with open(filename, 'w', encoding='utf-8') as myfile:
             myfile.write(cls.to_json_string(_dict))
 
     @staticmethod
@@ -73,36 +75,30 @@ class Base:
     def save_to_file_csv(cls, list_objs):
         """serializes in CSV"""
         filename = '{}.csv'.format(cls.__name__)
-        _dict = []
-        if list_objs is None:
-            return []
-        for i in list_objs:
-            _dict.append(i.to_dictionary())
-        with open(filename, 'w',) as myfile:
-            for i in range(len(_dict)):
-                writer = csv.DictWriter(myfile, fieldnames=_dict[i].keys())
-                if i == 0:
-                    writer.writeheader()
-                writer.writerow(_dict[i])
+        with open(filename, 'w', newline="") as myfile:
+            if list_objs is None or len(list_objs) == 0:
+                myfile.write('[]')
+            else:
+                for i in list_objs:
+                    writer = csv.DictWriter(
+                            myfile, fieldnames=i.to_dictionary().keys())
+                    writer.writerow(i.to_dictionary())
 
     @classmethod
     def load_from_file_csv(cls):
         """deserializes in CSV"""
         filename = '{}.csv'.format(cls.__name__)
-        mydict = {}
-        listdict = []
-        inst = []
         if not os.path.exists(filename):
-            return []
+            return '[]'
         with open(filename) as myfile:
-            read = csv.DictReader(myfile)
-            for i in read:
-                for key, value in i.items():
-                    mydict[key] = int(value)
-                listdict.append(mydict)
-        for i in listdict:
-            inst.append(cls.create(**i))
-        return inst
+            if cls.__name__ == "Rectangle":
+                fieldnames = ["id", "width", "height", "x", "y"]
+            else:
+                fieldnames = ["id", "size", "x", "y"]
+            read = csv.DictReader(myfile, fieldnames=fieldnames)
+            list_dict = [
+                    dict([ke, int(va)] for key, va in i.items())for i in read]
+        return [cls.create(**i) for i in list_dict]
 
     @staticmethod
     def draw(list_rectangles, list_squares):
@@ -124,7 +120,6 @@ class Base:
                 _pen.fd(rect.height)
                 _pen.rt(90)
             _pen.hideturtle()
-
 
         _pen.color('brown')
         for sq in list_squares:

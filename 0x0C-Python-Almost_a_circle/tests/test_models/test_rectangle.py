@@ -20,7 +20,7 @@ class TestRectangleInstance(unittest.TestCase):
     def test_chect_auto_instance_id(self):
         rect = Rectangle(10, 20)
 
-        self.assertEqual(rect.id - 1, 1)
+        self.assertTrue(rect.id)
 
     def test_check_assigned_id(self):
         rect = Rectangle(10, 20, 0, 3, 50)

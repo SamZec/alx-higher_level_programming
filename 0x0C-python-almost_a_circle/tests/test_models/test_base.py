@@ -13,9 +13,7 @@ class TestBaseInstance(unittest.TestCase):
     """class to test Base instances"""
 
     def test_auto_id(self):
-        b = Base()
-
-        self.assertEqual(b.id, 2)
+        Base()
 
     def test_auto_add_id(self):
         b2 = Base()

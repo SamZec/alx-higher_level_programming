@@ -12,18 +12,14 @@ from models.square import Square
 class TestBaseInstance(unittest.TestCase):
     """class to test Base instances"""
 
-    def test_auto_id(self):
-        Base()
-
     def test_auto_add_id(self):
-        b2 = Base()
+        self.assertEqual(Base().id, 1)
 
-        self.assertEqual(b2.id, 1)
+    def test_auto_id(self):
+        self.assertEqual(Base().id, 2)
 
     def test_passed_id(self):
-        b3 = Base(89)
-
-        self.assertEqual(b3.id, 89)
+        self.assertEqual(Base(89).id, 89)
 
     def test_two_args(self):
         with self.assertRaises(TypeError):

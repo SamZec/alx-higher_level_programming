@@ -102,10 +102,10 @@ class TestValidateRectangle(unittest.TestCase):
             self.asserEqual(e,  'width must be > 0')
 
     def test_under_0_x(self):
-        with self.assertRaises(ValueError) as e:
+        with self.assertRaises(TypeError) as e:
             rect = Rectangle(1, 3, 0.2)
 
-            self.asserEqual(e,  'x must be >= 0')
+            self.asserEqual(e,  'x must be an integer')
 
     def test_under_0_y(self):
         with self.assertRaises(ValueError) as e:
@@ -114,10 +114,10 @@ class TestValidateRectangle(unittest.TestCase):
             self.asserEqual(e,  'y must be >= 0')
 
     def test_under_0_x_and_y(self):
-        with self.assertRaises(ValueError) as e:
+        with self.assertRaises(TypeError) as e:
             rect = Rectangle(1, 3, 0.2, -5)
 
-            self.asserEqual(e,  'x must be >= 0')
+            self.asserEqual(e,  'x must be an integer')
 
 
 class TestRectangleArea(unittest.TestCase):

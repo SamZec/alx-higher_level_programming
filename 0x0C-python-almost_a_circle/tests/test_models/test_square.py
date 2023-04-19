@@ -33,9 +33,9 @@ class TestSquareInstance(unittest.TestCase):
             self.assertEqual(e, 'y must be > 0')
 
     def test_validate_y_x(self):
-        with self.assertRaises(ValueError) as e:
+        with self.assertRaises(TypeError) as e:
             sq = Square(5, 1, 0.5, 5)
-            self.assertEqual(e, 'x must be > 0')
+            self.assertEqual(e, 'x must be an integer')
 
     def test_validate_size(self):
         with self.assertRaises(TypeError) as e:

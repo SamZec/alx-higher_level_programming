@@ -11,26 +11,21 @@ from models.square import Square
 
 class TestBaseInstance(unittest.TestCase):
     """class to test Base instances"""
-    def test_base_type(self):
-        self.assertEqual(Base.__name__, 'Base')
 
-    def test_no_args(self):
-        b1 = Base()
+    def test_auto_id(self):
+        b = Base()
+
+        self.assertEqual(b.id, 2)
+
+    def test_auto_add_id(self):
         b2 = Base()
 
-        self.assertEqual(b1.id, 1)
-        self.assertEqual(b2.id, 2)
-        self.assertNotEqual(b1.id, b2.id)
+        self.assertEqual(b2.id, 1)
 
-    def test_args_int(self):
-        b3 = Base(5)
+    def test_passed_id(self):
+        b3 = Base(89)
 
-        self.assertEqual(b3.id, 5)
-
-    def test_args_string(self):
-        b4 = Base("Hi")
-
-        self.assertEqual(b4.id, 'Hi')
+        self.assertEqual(b3.id, 89)
 
     def test_two_args(self):
         with self.assertRaises(TypeError):
@@ -61,10 +56,14 @@ class Test_from_json_string(unittest.TestCase):
         self.assertEqual(str, type(Base.to_json_string(list_dict)))
 
     def test_none_or_empty_rect_dict(self):
-        list_dict = []
+        _str = Base.to_json_string(None)
 
-        self.assertEqual(str, type(Base.to_json_string(None)))
-        self.assertTrue(len(Base.to_json_string(list_dict)) == len('[]'))
+        self.assertEqual(_str, '[]')
+
+    def test_empty_list(self):
+        _str = Base.to_json_string([])
+
+        self.assertEqual(_str, '[]')
 
     def test_sq_dict(self):
         sq = Square(7, 9, 2, 3)
@@ -82,6 +81,11 @@ class Test_from_json_string(unittest.TestCase):
 
         self.assertEqual(str, type(Base.to_json_string(None)))
         self.assertTrue(len(Base.to_json_string(list_dict)) == len('[]'))
+
+    def test_one_key_value(self):
+        _str = Base.to_json_string([ { 'id': 12 }])
+
+        self.assertEqual(type(_str), str)
 
 
 class TestSaveToFile(unittest.TestCase):

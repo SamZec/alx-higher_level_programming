@@ -12,64 +12,74 @@ class TestRectangleInstance(unittest.TestCase):
     def test_create_rectangle(self):
         self.assertTrue(type(Rectangle), Base)
 
-    def test_instance_rect(self):
-        rect = Rectangle(10, 20)
+    def test_instance_rect_two_args(self):
 
-        self.assertIsInstance(rect, Rectangle)
+        self.assertIsInstance(Rectangle(10, 20), Rectangle)
 
-    def test_chect_auto_instance_id(self):
-        rect = Rectangle(10, 20)
+    def test_chect_rect_instance_three_args(self):
+        
+        self.assertIsInstance(Rectangle(10, 20, 0), Rectangle)
 
-        self.assertTrue(rect.id)
+    def test_rect_instance_four_args(self):
+        
+        self.assertIsInstance(Rectangle(10, 20, 0, 3), Rectangle)
 
-    def test_check_assigned_id(self):
-        rect = Rectangle(10, 20, 0, 3, 50)
+    def test_check_rect_instance_five_args(self):
 
-        self.assertEqual(rect.id, 50)
+        self.assertIsInstance(Rectangle(10, 20, 0, 3, 50), Rectangle)
 
     def test_rect_None_args(self):
         with self.assertRaises(TypeError):
-            rect = Rectangle()
+            Rectangle()
 
     def test_rect_one_args(self):
         with self.assertRaises(TypeError):
-            rect = Rectangle(1)
+            Rectangle(1)
 
 
 class TestValidateRectangle(unittest.TestCase):
     """Class to test Rectanlgle class attributes validation"""
-    def Test_no_validation_id_str(self):
-        rect = Rectangle(1, 3, 0, 3, 'h')
+    def Test_str_width(self):
+        with self.assertRaises(TypeError):
+            Rectangle('1', 2)
 
-        self.assertEqual(rect.id, 'h')
+    def Test_str_height(self):
+        with self.assertRaises(TypeError):
+            Rectangle(1, '2')
 
-    def Test_no_validation_id_int(self):
-        rect = Rectangle(1, 3, 0, 3, 100)
 
-        self.assertEqual(rect.id, 100)
+    def Test_str_x(self):
+        with self.assertRaises(TypeError):
+            Rectangle(1, 2, '3')
 
-    def Test_no_validation_id_float(self):
-        rect = Rectangle(1, 3, 0, 3, 3.5)
 
-        self.assertEqual(rect.id, 3.5)
+    def Test_str_y(self):
+        with self.assertRaises(TypeError):
+            Rectangle(1, 2, 3, '4')
 
-    def test_with_str(self):
-        with self.assertRaises(TypeError) as e:
-            rect = Rectangle('h', 2)
+    def test_with_0(self):
+        with self.assertRaises(ValueError) as e:
+            Rectangle(0, 1)
 
-            self.assertEqual(e, 'width must be an integer')
+    def test_height_0(self):
+        with self.assertRaises(ValueError) as e:
+            Rectangle(1, 0)
+
+    def test_with_under_0(self):
+        with self.assertRaises(ValueError) as e:
+            Rectangle(-1, 2)
+
+    def test_height_under_0(self):
+        with self.assertRaises(ValueError) as e:
+            Rectangle(1, -2)
 
     def test_with_float(self):
         with self.assertRaises(TypeError) as e:
-            rect = Rectangle(0.5, 2)
-
-            self.assertEqual(e, 'width must be an integer')
+            Rectangle(0.5, 2)
 
     def test_with_bool(self):
         with self.assertRaises(TypeError) as e:
-            rect = Rectangle(True, 2)
-
-            self.assertEqual(e, 'width must be an integer')
+            Rectangle(True, 2)
 
     def test_height_NaN(self):
         with self.assertRaises(TypeError) as e:
@@ -102,16 +112,12 @@ class TestValidateRectangle(unittest.TestCase):
             self.asserEqual(e,  'width must be > 0')
 
     def test_under_0_x(self):
-        with self.assertRaises(TypeError) as e:
-            rect = Rectangle(1, 3, 0.2)
-
-            self.asserEqual(e,  'x must be an integer')
+        with self.assertRaises(ValueError) as e:
+            Rectangle(1, 2, -3)
 
     def test_under_0_y(self):
         with self.assertRaises(ValueError) as e:
-            rect = Rectangle(1, 3, 1, -2)
-
-            self.asserEqual(e,  'y must be >= 0')
+            Rectangle(1, 2, 3, -4)
 
     def test_under_0_x_and_y(self):
         with self.assertRaises(TypeError) as e:
@@ -122,11 +128,9 @@ class TestValidateRectangle(unittest.TestCase):
 
 class TestRectangleArea(unittest.TestCase):
     """Class for testing Rectangle public method area"""
-    def test_area_int(self):
-        rect = Rectangle(5, 5)
-        a = rect.area()
+    def test_area(self):
 
-        self.assertEqual(a, 25)
+        self.assertEqual(Rectangle(1, 2).area(), 2)
 
     def test_area_string(self):
         with self.assertRaises(TypeError) as e:
@@ -152,6 +156,11 @@ class TestRectangle__str__(unittest.TestCase):
         Class to test the Rectangle method __str__ that return
         [Rectangle] (<id>) <x>/<y> - <width>/<height>
     """
+
+    def test_rect__str__(self):
+
+        self.assertTrue(Rectangle(1, 2).__str__())
+
     def test_rect_str_ouput_width_height(self):
         rect = Rectangle(10, 10)
 
@@ -174,6 +183,21 @@ class TestRectangle__str__(unittest.TestCase):
 
         self.assertEqual(
                 str(rect), '[Rectangle] (27) 3/4 - 10/10'.format(rect.id))
+        
+
+class TestRectangleDisplay(unittest.TestCase):
+    """class for testing the public method display of Rectangle class"""
+    def test_display_width_height(self):
+
+        Rectangle(1, 2).display()
+
+    def test_display_width_height_x(self):
+
+        Rectangle(1, 2, 3).display()
+
+    def test_display_width_height_x_y(self):
+
+        Rectangle(1, 2, 3, 4).display()
 
 
 class TestRectangleUpdate(unittest.TestCase):

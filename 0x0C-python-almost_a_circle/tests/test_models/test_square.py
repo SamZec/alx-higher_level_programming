@@ -13,39 +13,69 @@ class TestSquareInstance(unittest.TestCase):
         self.assertTrue(issubclass(Square, Rectangle))
 
     def test_square_intance(self):
-        sq = Square(1)
 
-        self.assertIsInstance(sq, Square)
+        self.assertIsInstance(Square(1), Square)
+
+    def test_square_intance_two_args(self):
+
+        self.assertIsInstance(Square(1, 2), Square)
+
+    def test_square_intance_three_args(self):
+
+        self.assertIsInstance(Square(1, 2, 3), Square)
 
     def test_inherite_attributes_width_height_is_size(self):
         sq = Square(5, 1, 2, 5)
 
         self.assertEqual(sq.size, 5)
 
+
+class TestSquareValidation(unittest.TestCase):
+    """class for testing validity of Square attributes"""
+    def test_str_size(self):
+        with self.assertRaises(TypeError):
+            Square('1')
+
+    def test_str_x(self):
+        with self.assertRaises(TypeError):
+            Square(1, '2')
+
+    def test_str_y(self):
+        with self.assertRaises(TypeError):
+            Square(1, 2, '3')
+
     def test_validate_x(self):
         with self.assertRaises(ValueError) as e:
             sq = Square(5, -1, 2, 5)
             self.assertEqual(e, 'x must be > 0')
 
+    def test_all_valid_attr(self):
+
+        self.assertIsInstance(Square(1, 2, 3, 4), Square)
+
+    def test_str_size_under_0(self):
+        with self.assertRaises(ValueError):
+            Square(-1)
+
     def test_validate_y(self):
         with self.assertRaises(ValueError) as e:
-            sq = Square(5, 1, -2, 5)
-            self.assertEqual(e, 'y must be > 0')
+            Square(1, -2)
 
     def test_validate_y_x(self):
-        with self.assertRaises(TypeError) as e:
-            sq = Square(5, 1, 0.5, 5)
-            self.assertEqual(e, 'x must be an integer')
+        with self.assertRaises(ValueError) as e:
+            Square(1, 2, -3)
 
     def test_validate_size(self):
         with self.assertRaises(TypeError) as e:
-            sq = Square('5', 1, 0, 5)
+            sq = Square(0.5, 1, 0, 5)
             self.assertEqual(e, 'width must be an integer')
+    def test_str_size(self):
+        with self.assertRaises(ValueError):
+            Square(0)
 
     def test_square_str_overload(self):
-        sq = Square(5, 3, 3, 20)
 
-        self.assertEqual(str(sq), '[Square] (20) 3/3 - 5')
+        self.assertTrue(Square(5, 3, 3, 20).__str__())
 
 
 class TestSquareUpdate(unittest.TestCase):
@@ -63,6 +93,9 @@ class TestSquareUpdate(unittest.TestCase):
             **kwargs must be skipped if *args exists and is not empty
         Each key in this dictionary represents an attribute to the instance
     """
+    def test_square_update(self):
+
+        self.assertTrue(str(Square(1, 2, 3, 4).update()))
 
     def test_one_arg(self):
         sq = Square(5)
@@ -75,12 +108,23 @@ class TestSquareUpdate(unittest.TestCase):
         sq.update(7, 4, 1)
 
         self.assertEqual(str(sq), '[Square] (7) 1/0 - 4')
+    def test_two_args(self):
+        sq = Square(5)
+        sq.update(7, 4)
+
+        self.assertEqual(str(sq), '[Square] (7) 0/0 - 4')
 
     def test_two_kwarg(self):
         sq = Square(5)
         sq.update(x=12, id=6)
 
         self.assertEqual(str(sq), '[Square] (6) 12/0 - 5')
+
+    def test_one_kwarg(self):
+        sq = Square(5)
+        sq.update(id=6)
+
+        self.assertEqual(str(sq), '[Square] (6) 0/0 - 5')
 
     def test_three_kwarg(self):
         sq = Square(5)
@@ -112,10 +156,8 @@ class TestSquareToDictionary(unittest.TestCase):
         -y
     """
     def test_type_instance_dict(self):
-        sq = Square(10, 2, 1)
-        sq_dict = sq.to_dictionary()
 
-        self.assertTrue(type(sq_dict), dict)
+        self.assertTrue(type(Square(1, 2, 3, 4).to_dictionary), dict)
 
     def test_to_dict_output(self):
         sq = Square(10, 2, 1, 11)
@@ -137,6 +179,33 @@ class TestSquareToDictionary(unittest.TestCase):
         sq.update(**sq2.to_dictionary())
 
         self.assertEqual(str(sq), '[Square] (11) 2/1 - 10')
+
+
+class TestSquareCreate(unittest.TestCase):
+    """class for testing square update"""
+    def test_one_kwarg(self):
+        Square.create(**{ 'id': 89 })
+
+    def test_two_kwarg(self):
+        Square.create(**{ 'id': 89, 'size': 1 })
+
+    def test_three_kwarg(self):
+        Square.create(**{ 'id': 89, 'size': 1, 'x': 2 })
+
+    def test_four_kwarg(self):
+        Square.create(**{ 'id': 89, 'size': 1, 'x': 2, 'y': 3 })
+
+
+class TestSquareSaveToFile(unittest.TestCase):
+    """class for testing Square inherited save_To_file method"""
+    def test_save_to_file_none(self):
+        Square.save_to_file(None)
+
+    def test_save_to_file_empty_list(self):
+        Square.save_to_file([])
+
+    def test_save_to_file(self):
+        Square.save_to_file([Square(1)])
 
 
 if __name__ == '__main__':

@@ -2,6 +2,7 @@
 # test_rectangle.py
 """A module for unittesting the the Rectangle class"""
 
+import os
 import unittest
 from models.base import Base
 from models.rectangle import Rectangle
@@ -17,11 +18,11 @@ class TestRectangleInstance(unittest.TestCase):
         self.assertIsInstance(Rectangle(10, 20), Rectangle)
 
     def test_chect_rect_instance_three_args(self):
-        
+
         self.assertIsInstance(Rectangle(10, 20, 0), Rectangle)
 
     def test_rect_instance_four_args(self):
-        
+
         self.assertIsInstance(Rectangle(10, 20, 0, 3), Rectangle)
 
     def test_check_rect_instance_five_args(self):
@@ -47,11 +48,9 @@ class TestValidateRectangle(unittest.TestCase):
         with self.assertRaises(TypeError):
             Rectangle(1, '2')
 
-
     def Test_str_x(self):
         with self.assertRaises(TypeError):
             Rectangle(1, 2, '3')
-
 
     def Test_str_y(self):
         with self.assertRaises(TypeError):
@@ -183,7 +182,7 @@ class TestRectangle__str__(unittest.TestCase):
 
         self.assertEqual(
                 str(rect), '[Rectangle] (27) 3/4 - 10/10'.format(rect.id))
-        
+
 
 class TestRectangleDisplay(unittest.TestCase):
     """class for testing the public method display of Rectangle class"""
@@ -297,6 +296,24 @@ class TestRectangleUpdateArgsKwargs(unittest.TestCase):
         self.assertEqual(str(rect), '[Rectangle] (40) 9/1 - 2/5')
 
 
+class TestRectangleCreate(unittest.TestCase):
+    """Class to test rectangle method create"""
+    def test_one_kwarg(self):
+        Rectangle.create(**{'id': 89})
+
+    def test_two_kwargs(self):
+        Rectangle.create(**{'id': 89, 'width': 1})
+
+    def test_three_kwargs(self):
+        Rectangle.create(**{'id': 89, 'width': 1, 'height': 2})
+
+    def test_four_kwargs(self):
+        Rectangle.create(**{'id': 89, 'width': 1, 'height': 2, 'x': 3})
+
+    def test_five_kwarg(self):
+        Rectangle.create(**{'id': 89, 'width': 1, 'height': 2, 'x': 3, 'y': 4})
+
+
 class TestRectangleToDictionary(unittest.TestCase):
     """Class for testing Rectangle public method to_dictionary that dict
         representation of Rectangle
@@ -321,6 +338,33 @@ class TestRectangleToDictionary(unittest.TestCase):
         self.assertEqual(
                 str(rect_dict),
                 "{'id': 1, 'width': 10, 'height': 2, 'x': 1, 'y': 9}")
+
+
+class TestRectangleToFileFromFile(unittest.TestCase):
+    """class to test save_to_file and load_from_file methods"""
+    @classmethod
+    def tearDown(self):
+        """Delete any created files."""
+        try:
+            os.remove("Rectangle.json")
+        except IOError:
+            pass
+
+    def test_save_to_file_none(self):
+        Rectangle.save_to_file(None)
+
+    def test_save_to_file_empty_list(self):
+        Rectangle.save_to_file([])
+
+    def test_save_to_file(self):
+        Rectangle.save_to_file([Rectangle(1, 2)])
+
+    def test_load_from_file_no_file(self):
+        Rectangle.load_from_file()
+
+    def test_load_from_file_file_exists(self):
+        Rectangle.save_to_file([Rectangle(1, 2)])
+        Rectangle.load_from_file()
 
 
 if __name__ == '__name__':

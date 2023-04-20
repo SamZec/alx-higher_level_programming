@@ -2,6 +2,7 @@
 # test_square.py
 """A module for unittesting the Square class"""
 
+import os
 import unittest
 from models.rectangle import Rectangle
 from models.square import Square
@@ -69,6 +70,7 @@ class TestSquareValidation(unittest.TestCase):
         with self.assertRaises(TypeError) as e:
             sq = Square(0.5, 1, 0, 5)
             self.assertEqual(e, 'width must be an integer')
+
     def test_str_size(self):
         with self.assertRaises(ValueError):
             Square(0)
@@ -108,6 +110,7 @@ class TestSquareUpdate(unittest.TestCase):
         sq.update(7, 4, 1)
 
         self.assertEqual(str(sq), '[Square] (7) 1/0 - 4')
+
     def test_two_args(self):
         sq = Square(5)
         sq.update(7, 4)
@@ -184,20 +187,28 @@ class TestSquareToDictionary(unittest.TestCase):
 class TestSquareCreate(unittest.TestCase):
     """class for testing square update"""
     def test_one_kwarg(self):
-        Square.create(**{ 'id': 89 })
+        Square.create(**{'id': 89})
 
     def test_two_kwarg(self):
-        Square.create(**{ 'id': 89, 'size': 1 })
+        Square.create(**{'id': 89, 'size': 1})
 
     def test_three_kwarg(self):
-        Square.create(**{ 'id': 89, 'size': 1, 'x': 2 })
+        Square.create(**{'id': 89, 'size': 1, 'x': 2})
 
     def test_four_kwarg(self):
-        Square.create(**{ 'id': 89, 'size': 1, 'x': 2, 'y': 3 })
+        Square.create(**{'id': 89, 'size': 1, 'x': 2, 'y': 3})
 
 
-class TestSquareSaveToFile(unittest.TestCase):
+class TestSquareSaveFileLoadFile(unittest.TestCase):
     """class for testing Square inherited save_To_file method"""
+    @classmethod
+    def tearDown(self):
+        """Delete any created files."""
+        try:
+            os.remove("Square.json")
+        except IOError:
+            pass
+
     def test_save_to_file_none(self):
         Square.save_to_file(None)
 
@@ -206,6 +217,13 @@ class TestSquareSaveToFile(unittest.TestCase):
 
     def test_save_to_file(self):
         Square.save_to_file([Square(1)])
+
+    def test_load_from_file_none(self):
+        Square.load_from_file()
+
+    def test_load_from_file_file_exist(self):
+        Square.save_to_file([Square(1)])
+        Square.load_from_file()
 
 
 if __name__ == '__main__':

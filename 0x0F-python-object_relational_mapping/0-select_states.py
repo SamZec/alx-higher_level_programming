@@ -7,7 +7,12 @@ import sys
 
 
 def List_state():
-    db = MySQLdb.connect(user=sys.argv[1], passwd=sys.argv[2], db=sys.argv[3])
+    db = MySQLdb.connect(
+                host='loacalhost',
+                port='3306',
+                user=sys.argv[1],
+                passwd=sys.argv[2],
+                db=sys.argv[3])
     conn = db.cursor()
     conn.execute('SELECT * FROM states ORDER BY id ASC')
     for state in conn.fetchall():

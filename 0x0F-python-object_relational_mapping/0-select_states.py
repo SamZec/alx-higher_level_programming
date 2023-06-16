@@ -9,7 +9,7 @@ import sys
 def List_state():
     db = MySQLdb.connect(
                 host='loacalhost',
-                port='3306',
+                port=3306,
                 user=sys.argv[1],
                 passwd=sys.argv[2],
                 db=sys.argv[3])

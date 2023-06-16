@@ -7,6 +7,7 @@ import sys
 
 
 def List_state():
+    """A function that list states"""
     db = MySQLdb.connect(
                 host='loacalhost',
                 port=3306,

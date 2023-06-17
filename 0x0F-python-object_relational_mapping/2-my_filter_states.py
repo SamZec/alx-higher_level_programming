@@ -20,7 +20,7 @@ def list_states():
             charset="utf8"
             )
     cur = conn.cursor()
-    query = "SELECT * FROM states WHERE name = '{}'"
+    query = "SELECT * FROM states WHERE name = '{}' ORDER BY id ASC"
     cur.execute(query.format(argv[4]))
     for state in cur.fetchall():
         print(state)

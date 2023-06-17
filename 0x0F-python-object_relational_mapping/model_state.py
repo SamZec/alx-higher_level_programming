@@ -1,4 +1,4 @@
-#!/usr/bin/pytho3
+#!/usr/bin/python3
 """
     model_state.py
     a python file that contains the class definition of a State

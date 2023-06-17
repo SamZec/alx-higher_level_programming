@@ -18,13 +18,12 @@ def list_state():
     Session = sessionmaker(bind=engine)
     session = Session()
 
-    try:
-        state = session.query(State).order_by(State.id).first()
+    state = session.query(State).order_by(State.id).first()
+    if (state is None):
+        print('Nothing')
+    else:
         print("{}: {}".format(state.id, state.name))
-    except Exception:
-        print()
-    finally:
-        session.close()
+    session.close()
 
 
 if __name__ == '__main__':

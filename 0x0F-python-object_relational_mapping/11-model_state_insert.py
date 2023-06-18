@@ -11,7 +11,7 @@ import sys
 
 
 def add_state():
-    """A function for listing states object"""
+    """A function for adding new states object"""
     engine = create_engine(
             'mysql+mysqldb://{}:{}@localhost:3306/{}'.format(
                 sys.argv[1], sys.argv[2], sys.argv[3]), pool_pre_ping=True)

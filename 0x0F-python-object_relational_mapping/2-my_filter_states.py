@@ -20,7 +20,7 @@ def list_states():
             charset="utf8"
             )
     cur = conn.cursor()
-    query = """SELECT * FROM states WHERE name = '{:s}'
+    query = """SELECT * FROM states WHERE BINARY name = '{:s}'
             ORDER BY id ASC""".format(argv[4])
     cur.execute(query)
     for state in cur.fetchall():

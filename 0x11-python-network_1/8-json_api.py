@@ -19,7 +19,7 @@ def request():
         Display 'No result' if the JSON is empty
     """
     payload = {'q': ""}
-    url = 'http://94d0337f6bd0.dafdf25f.alx-cod.online:5000/search_user'
+    url = 'http://0.0.0.0:5000/search_user'
     if len(sys.argv) == 2:
         payload = {'q': sys.argv[1]}
     data = requests.post(url, payload)

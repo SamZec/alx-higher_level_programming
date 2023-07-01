@@ -10,19 +10,10 @@ def github():
     takes your GitHub credentials (username and password)
     and uses the GitHub API to display your id
     """
-    header = {
-                "Accept": "application/vnd.github+json",
-                "Authorization": "Bearer {}".format(sys.argv[2]),
-                "X-GitHub-Api-Version": "2022-11-28"
-            }
-    url = 'https://api.github.com/{}'.format(sys.argv[1])
-    data = requests.get(url, headers=header)
-    try:
-        data = requests.get(url, headers=header)
-        data_dict = data.text
-        print(data_dict.get('id'))
-    except Exception as e:
-        print("None")
+    auth = requests.auth.HTTPBasicAuth(sys.argv[1], sys.argv[2])
+    data = requests.get("https://api.github.com/user", auth=auth)
+    print(data.json().get("id"))
+
 
 
 if __name__ == '__main__':

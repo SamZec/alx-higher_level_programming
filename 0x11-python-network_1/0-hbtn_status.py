@@ -10,11 +10,10 @@ def fetchURL():
     """
     with urllib.request.urlopen('https://alx-intranet.hbtn.io/status') as fs:
         f = fs.read()
-        body = "Body response:\n"
-        _type = "    - type: {}\n".format(type(f))
-        content = "    - content: {}\n".format(f)
-        _utf8 = "    - utf8 content: {}".format(f.decode())
-        print(body + _type + content + _utf8)
+        print("Body response:")
+        print("\t- type: {}".format(type(f)))
+        print("\t- content: {}".format(f))
+        print("\t- utf8 content: {}".format(f.decode()))
 
 
 if __name__ == '__main__':

@@ -15,6 +15,5 @@ def github():
     print(data.json().get("id"))
 
 
-
 if __name__ == '__main__':
     github()

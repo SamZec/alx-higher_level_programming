@@ -16,7 +16,7 @@ def postEmail():
     data_bytes = data_parse.encode('ascii')
     post = urllib.request.Request(sys.argv[1], data_bytes)
     with urllib.request.urlopen(post) as fs:
-        print('Your email is: {}'.format(fs.read().decode('utf-8')))
+        print(fs.read().decode('utf-8'))
 
 
 if __name__ == '__main__':

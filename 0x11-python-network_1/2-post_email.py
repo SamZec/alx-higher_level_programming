@@ -11,7 +11,7 @@ def postEmail():
     sends a POST request to a URL with an email as a parameter,
     and displays the body of the response (decoded in utf-8)
     """
-    data = {'email': '{}'.format(sys.argv[2])}
+    data = {'email': sys.argv[2]}
     data_parse = urllib.parse.urlencode(data)
     data_bytes = data_parse.encode('ascii')
     post = urllib.request.Request(sys.argv[1], data_bytes)

@@ -15,7 +15,7 @@ request.get(url, function (err, res, body) {
         const m = characters[j].split('/');
         if (m.includes('18')) {
           count++;
-	}
+        }
       }
     }
   }

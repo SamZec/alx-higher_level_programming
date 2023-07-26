@@ -4,9 +4,7 @@ const url = process.argv[2];
 const request = require('request');
 
 request.get(url, function (err, res, body) {
-  if (err) {
-    console.log(err);
-  } else {
+  if (!err) {
     const data = JSON.parse(body);
     const tasks = {};
     for (let i = 0; data[i] !== undefined; i++) {

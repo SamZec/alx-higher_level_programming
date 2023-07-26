@@ -7,15 +7,13 @@ request.get(url, function (err, res, body) {
   if (!err) {
     const data = JSON.parse(body);
     const tasks = {};
-    for (let i = 0; data[i] !== undefined; i++) {
-      if (data[i].completed) {
-        if (data[i].userId in tasks) {
-          tasks[data[i].userId] += 1;
-        } else {
-          tasks[data[i].userId] = 1;
-        }
+    data.forEach((d) => {
+      if (d.completed && tasks[d.userId] === undefined) {
+        tasks[d.userId] = 1;
+      } else if (d.completed) {
+        tasks[d.userId] += 1;
       }
-    }
+    });
     console.log(tasks);
   }
 });
